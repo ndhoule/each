@@ -18,7 +18,7 @@ $ npm install each
 
 ## API
 
-### each(iterator : Function, collection : Array|Object|string) => undefined
+### `each(iterator : Function, collection : Array|Object|string) => undefined`
 
 Iterate over an input collection, invoking an `iterator` function for each element in the collection, passing to the iterator three arguments: `(value, index, collection)`.
 
