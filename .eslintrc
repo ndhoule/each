@@ -5,6 +5,7 @@
   },
 
   "rules": {
-    "quotes": [2, "single"]
+    "quotes": [2, "single"],
+    "eqeqeq": [2, "allow-null"]
   }
 }
