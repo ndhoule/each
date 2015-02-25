@@ -27,7 +27,7 @@ fmt:
 lint:
 	@node_modules/.bin/eslint $(SRCS) $(TESTS)
 
-test:
+test: lint
 	@node_modules/.bin/mocha \
 		--ui bdd \
 		--reporter spec \
@@ -39,4 +39,4 @@ test:
 #
 
 .DEFAULT_GOAL = test
-.PHONY: clean test
+.PHONY: clean fmt lint test
