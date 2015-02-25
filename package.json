@@ -1,0 +1,31 @@
+{
+  "name": "each",
+  "version": "1.0.0",
+  "description": "Iterate over a collection, invoking a function for each element.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ndhoule/each.git"
+  },
+  "keywords": [
+    "component"
+  ],
+  "author": "Nathan Houle <nathan@nathanhoule.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ndhoule/each/issues"
+  },
+  "homepage": "https://github.com/ndhoule/each",
+  "dependencies": {
+    "keys": "git://github.com/ndhoule/keys.git#1.0.0",
+    "sinon": "^1.12.2"
+  },
+  "devDependencies": {
+    "esformatter-braces": "^1.0.0",
+    "esformatter-quotes": "^1.0.0",
+    "esformatter-semicolons": "^1.0.3",
+    "eslint": "^0.15.0",
+    "jsfmt": "^0.4.0",
+    "mocha": "^2.1.0"
+  }
+}

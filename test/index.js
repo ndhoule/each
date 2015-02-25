@@ -1,0 +1,160 @@
+/* global describe it beforeEach */
+/* eslint no-new-wrappers: 0 */
+
+'use strict';
+
+var assert = require('assert');
+var keys = require('keys');
+var sinon = require('sinon');
+var each = require('../');
+
+// TODO: Tighten up these tests, remove duplicates
+describe('each', function() {
+  var identity;
+
+  beforeEach(function() {
+    identity = sinon.spy(function(val) {
+      return val;
+    });
+  });
+
+  it('should be a function', function() {
+    assert.equal(typeof each, 'function');
+  });
+
+  it('should have an arity of 2', function() {
+    assert(each.length, 2);
+  });
+
+  it('should pass `iterator` the value, index, and collection', function() {
+    var elems = ['zero', 'one', 'two'];
+    each(identity, elems);
+
+    assert(identity.calledWithExactly('zero', 0, elems));
+    assert(identity.calledWithExactly('one', 1, elems));
+    assert(identity.calledWithExactly('two', 2, elems));
+  });
+
+  it('should iterate in left-to-right order', function() {
+    var elems = [1, 0, 7, 14];
+    each(identity, elems);
+
+    assert(identity.firstCall.calledWithExactly(1, 0, elems));
+    assert(identity.secondCall.calledWithExactly(0, 1, elems));
+    assert(identity.thirdCall.calledWithExactly(7, 2, elems));
+    assert(identity.lastCall.calledWithExactly(14, 3, elems));
+  });
+
+  it('should perform an action on each element', function() {
+    each(identity, [5, 4, 3, 2, 1]);
+
+    assert.equal(identity.callCount, 5);
+    assert(identity.calledWith(5));
+    assert(identity.calledWith(4));
+    assert(identity.calledWith(3));
+    assert(identity.calledWith(2));
+    assert(identity.calledWith(1));
+  });
+
+  it('should permit mutation of the input collection', function() {
+    var elems = [5, 4, 3, 2, 1];
+    each(function(val, i, coll) {
+      coll[i] = 'omg';
+    }, elems);
+
+    assert.deepEqual(elems, ['omg', 'omg', 'omg', 'omg', 'omg']);
+  });
+
+  it('should exit early when the provided callback returns `false`', function() {
+    each(identity, [1, 2, 3, false, 4]);
+
+    assert.equal(identity.callCount, 4);
+    assert(identity.calledWith(1));
+    assert(identity.calledWith(2));
+    assert(identity.calledWith(3));
+    assert(identity.calledWith(false));
+  });
+
+  it('should return `undefined`', function() {
+    assert(each(identity, [1, 2, 3]) === undefined);
+  });
+
+  it('should work on arrays', function() {
+    var elems = ['a', 'b', 'c', 'd'];
+    each(identity, elems);
+
+    assert(identity.firstCall.calledWithExactly('a', 0, elems));
+    assert(identity.secondCall.calledWithExactly('b', 1, elems));
+    assert(identity.thirdCall.calledWithExactly('c', 2, elems));
+    assert(identity.lastCall.calledWithExactly('d', 3, elems));
+  });
+
+  it('should work on objects (with no guarantee of iteration order)', function() {
+    var elems = {
+      a: 1,
+      b: 2,
+      c: 3
+    };
+    // Compensate for object iteration being platform-specific by getting
+    // this platform's iteration order
+    var iter = keys(elems);
+    each(identity, elems);
+
+    assert(identity.firstCall.calledWithExactly(elems[iter[0]], iter[0], elems));
+    assert(identity.secondCall.calledWithExactly(elems[iter[1]], iter[1], elems));
+    assert(identity.thirdCall.calledWithExactly(elems[iter[2]], iter[2], elems));
+  });
+
+  it('should work on strings', function() {
+    var string = 'tim';
+    each(identity, string);
+
+    assert(identity.firstCall.calledWithExactly(string[0], 0, string));
+    assert(identity.secondCall.calledWithExactly(string[1], 1, string));
+    assert(identity.thirdCall.calledWithExactly(string[2], 2, string));
+  });
+
+  it('should work on string objects', function() {
+    var string = new String('tim');
+    each(identity, string);
+
+    assert(identity.firstCall.calledWithExactly(string[0], 0, string));
+    assert(identity.secondCall.calledWithExactly(string[1], 1, string));
+    assert(identity.thirdCall.calledWithExactly(string[2], 2, string));
+  });
+
+  it('should ignore inherited properties', function() {
+    var parent = {
+      enchanter: 'Tim'
+    };
+    var child = Object.create(parent);
+    child.a = 1;
+    each(identity, child);
+
+    assert(identity.calledOnce);
+    assert(identity.calledWith(1, 'a', child));
+    assert(!identity.calledWith('Tim', 'enchanter'));
+  });
+
+  it('should ignore non-enumerable properties', function() {
+    var obj = Object.create(null, {
+      a: {
+        value: 1,
+        enumerable: false
+      },
+      b: {
+        value: 2,
+        enumerable: false
+      },
+      c: {
+        value: 3,
+        enumerable: true
+      }
+    });
+
+    each(identity, obj);
+
+    assert(identity.calledOnce);
+    assert(identity.calledWith(3, 'c', obj));
+  });
+});

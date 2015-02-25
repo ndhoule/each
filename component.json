@@ -1,0 +1,14 @@
+{
+  "name": "each",
+  "repo": "ndhoule/each",
+  "version": "1.0.0",
+  "description": "Iterate over a collection, invoking a function for each element.",
+  "keywords": [
+  ],
+  "license": "MIT",
+  "scripts": ["index.js"],
+  "dependencies": {},
+  "development": {
+    "mochajs/mocha": "^2.1.0"
+  }
+}
