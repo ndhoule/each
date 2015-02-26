@@ -8,7 +8,6 @@ var keys = require('keys');
 var sinon = require('sinon');
 var each = require('../');
 
-// TODO: Tighten up these tests, remove duplicates
 describe('each', function() {
   var identity;
 
@@ -26,7 +25,7 @@ describe('each', function() {
     assert.equal(each.length, 2);
   });
 
-  it('should pass `iterator` the value, index, and collection', function() {
+  it('should invoke the `iterator` for each value in the collection, passing `value`, `key`, and `collection`', function() {
     var elems = ['zero', 'one', 'two'];
     each(identity, elems);
 
@@ -45,24 +44,8 @@ describe('each', function() {
     assert(identity.lastCall.calledWithExactly(14, 3, elems));
   });
 
-  it('should perform an action on each element', function() {
-    each(identity, [5, 4, 3, 2, 1]);
-
-    assert.equal(identity.callCount, 5);
-    assert(identity.calledWith(5));
-    assert(identity.calledWith(4));
-    assert(identity.calledWith(3));
-    assert(identity.calledWith(2));
-    assert(identity.calledWith(1));
-  });
-
-  it('should permit mutation of the input collection', function() {
-    var elems = [5, 4, 3, 2, 1];
-    each(function(val, i, coll) {
-      coll[i] = 'omg';
-    }, elems);
-
-    assert.deepEqual(elems, ['omg', 'omg', 'omg', 'omg', 'omg']);
+  it('should return `undefined`', function() {
+    assert(each(identity, [1, 2, 3]) === undefined);
   });
 
   it('should exit early when the provided callback returns `false`', function() {
@@ -75,8 +58,13 @@ describe('each', function() {
     assert(identity.calledWith(false));
   });
 
-  it('should return `undefined`', function() {
-    assert(each(identity, [1, 2, 3]) === undefined);
+  it('should pass the original collection, allowing mutation', function() {
+    var elems = [5, 4, 3, 2, 1];
+    each(function(val, i, coll) {
+      coll[i] = 'omg';
+    }, elems);
+
+    assert.deepEqual(elems, ['omg', 'omg', 'omg', 'omg', 'omg']);
   });
 
   it('should work on arrays', function() {
@@ -151,7 +139,6 @@ describe('each', function() {
         enumerable: true
       }
     });
-
     each(identity, obj);
 
     assert(identity.calledOnce);
