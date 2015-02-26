@@ -23,7 +23,7 @@ describe('each', function() {
   });
 
   it('should have an arity of 2', function() {
-    assert(each.length, 2);
+    assert.equal(each.length, 2);
   });
 
   it('should pass `iterator` the value, index, and collection', function() {
