@@ -1,6 +1,6 @@
 # each [![Circle CI][circleci-badge]][circleci-link]
 
-Iterate over a collection, invoking a function for each element.
+Iterate over a collection, invoking a function for each element in the collection.
 
 ## Installation
 
