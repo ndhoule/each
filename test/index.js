@@ -111,37 +111,39 @@ describe('each', function() {
     assert(identity.thirdCall.calledWithExactly(string[2], 2, string));
   });
 
-  it('should ignore inherited properties', function() {
-    var parent = {
-      enchanter: 'Tim'
-    };
-    var child = Object.create(parent);
-    child.a = 1;
-    each(identity, child);
+  if (typeof Object.create === 'function') {
+    it('should ignore inherited properties', function() {
+      var parent = {
+        enchanter: 'Tim'
+      };
+      var child = Object.create(parent);
+      child.a = 1;
+      each(identity, child);
 
-    assert(identity.calledOnce);
-    assert(identity.calledWith(1, 'a', child));
-    assert(!identity.calledWith('Tim', 'enchanter'));
-  });
-
-  it('should ignore non-enumerable properties', function() {
-    var obj = Object.create(null, {
-      a: {
-        value: 1,
-        enumerable: false
-      },
-      b: {
-        value: 2,
-        enumerable: false
-      },
-      c: {
-        value: 3,
-        enumerable: true
-      }
+      assert(identity.calledOnce);
+      assert(identity.calledWith(1, 'a', child));
+      assert(!identity.calledWith('Tim', 'enchanter'));
     });
-    each(identity, obj);
 
-    assert(identity.calledOnce);
-    assert(identity.calledWith(3, 'c', obj));
-  });
+    it('should ignore non-enumerable properties', function() {
+      var obj = Object.create(null, {
+        a: {
+          value: 1,
+          enumerable: false
+        },
+        b: {
+          value: 2,
+          enumerable: false
+        },
+        c: {
+          value: 3,
+          enumerable: true
+        }
+      });
+      each(identity, obj);
+
+      assert(identity.calledOnce);
+      assert(identity.calledWith(3, 'c', obj));
+    });
+  }
 });
