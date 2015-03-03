@@ -1,4 +1,4 @@
-# each [![Circle CI][circleci-badge]][circleci-link]
+# each [![CI][ci-badge]][ci-link]
 
 Iterate over a collection, invoking a function for each element in the collection.
 
@@ -50,5 +50,5 @@ each(log, { name: 'tim', occupation: 'enchanter' });
 
 Released under the [MIT license](LICENSE.md).
 
-[circleci-link]: https://circleci.com/gh/ndhoule/each
-[circleci-badge]: https://circleci.com/gh/ndhoule/each.svg?style=svg&circle-token=4d65820fbf012e2c1c6649d9ba9319cdbfc0e549
+[ci-link]: https://travis-ci.org/ndhoule/each
+[ci-badge]: https://travis-ci.org/ndhoule/each.svg?branch=master
