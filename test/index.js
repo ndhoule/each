@@ -1,12 +1,26 @@
-/* global describe it beforeEach */
+/* global describe it xit beforeEach */
 /* eslint no-new-wrappers: 0 */
 
 'use strict';
+
+/**
+ * Module dependencies.
+ */
 
 var assert = require('assert');
 var keys = require('keys');
 var sinon = require('sinon');
 var each = require('../');
+
+/**
+ * Locals.
+ */
+
+var es5It = typeof Object.create === 'function' ? it : xit;
+
+/**
+ * Tests.
+ */
 
 describe('each', function() {
   var identity;
@@ -93,7 +107,7 @@ describe('each', function() {
     assert(identity.thirdCall.calledWithExactly(elems[iter[2]], iter[2], elems));
   });
 
-  it('should work on strings', function() {
+  es5It('should work on strings', function() {
     var string = 'tim';
     each(identity, string);
 
@@ -102,7 +116,7 @@ describe('each', function() {
     assert(identity.thirdCall.calledWithExactly('m', 2, string));
   });
 
-  it('should work on string objects', function() {
+  es5It('should work on string objects', function() {
     var string = new String('tim');
     each(identity, string);
 
@@ -111,39 +125,37 @@ describe('each', function() {
     assert(identity.thirdCall.calledWithExactly('m', 2, string));
   });
 
-  if (typeof Object.create === 'function') {
-    it('should ignore inherited properties', function() {
-      var parent = {
-        enchanter: 'Tim'
-      };
-      var child = Object.create(parent);
-      child.a = 1;
-      each(identity, child);
+  es5It('should ignore inherited properties', function() {
+    var parent = {
+      enchanter: 'Tim'
+    };
+    var child = Object.create(parent);
+    child.a = 1;
+    each(identity, child);
 
-      assert(identity.calledOnce);
-      assert(identity.calledWith(1, 'a', child));
-      assert(!identity.calledWith('Tim', 'enchanter'));
+    assert(identity.calledOnce);
+    assert(identity.calledWith(1, 'a', child));
+    assert(!identity.calledWith('Tim', 'enchanter'));
+  });
+
+  es5It('should ignore non-enumerable properties', function() {
+    var obj = Object.create(null, {
+      a: {
+        value: 1,
+        enumerable: false
+      },
+      b: {
+        value: 2,
+        enumerable: false
+      },
+      c: {
+        value: 3,
+        enumerable: true
+      }
     });
+    each(identity, obj);
 
-    it('should ignore non-enumerable properties', function() {
-      var obj = Object.create(null, {
-        a: {
-          value: 1,
-          enumerable: false
-        },
-        b: {
-          value: 2,
-          enumerable: false
-        },
-        c: {
-          value: 3,
-          enumerable: true
-        }
-      });
-      each(identity, obj);
-
-      assert(identity.calledOnce);
-      assert(identity.calledWith(3, 'c', obj));
-    });
-  }
+    assert(identity.calledOnce);
+    assert(identity.calledWith(3, 'c', obj));
+  });
 });
