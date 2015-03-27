@@ -97,18 +97,18 @@ describe('each', function() {
     var string = 'tim';
     each(identity, string);
 
-    assert(identity.firstCall.calledWithExactly(string[0], 0, string));
-    assert(identity.secondCall.calledWithExactly(string[1], 1, string));
-    assert(identity.thirdCall.calledWithExactly(string[2], 2, string));
+    assert(identity.firstCall.calledWithExactly('t', 0, string));
+    assert(identity.secondCall.calledWithExactly('i', 1, string));
+    assert(identity.thirdCall.calledWithExactly('m', 2, string));
   });
 
   it('should work on string objects', function() {
     var string = new String('tim');
     each(identity, string);
 
-    assert(identity.firstCall.calledWithExactly(string[0], 0, string));
-    assert(identity.secondCall.calledWithExactly(string[1], 1, string));
-    assert(identity.thirdCall.calledWithExactly(string[2], 2, string));
+    assert(identity.firstCall.calledWithExactly('t', 0, string));
+    assert(identity.secondCall.calledWithExactly('i', 1, string));
+    assert(identity.thirdCall.calledWithExactly('m', 2, string));
   });
 
   if (typeof Object.create === 'function') {
