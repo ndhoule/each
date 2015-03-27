@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/ndhoule/each",
   "dependencies": {
-    "keys": "git://github.com/ndhoule/keys.git#1.0.0",
+    "keys": "git://github.com/ndhoule/keys.git#1.1.0",
     "sinon": "^1.12.2"
   },
   "devDependencies": {
