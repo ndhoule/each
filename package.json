@@ -1,6 +1,6 @@
 {
   "name": "each",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Iterate over a collection, invoking a function for each element.",
   "main": "index.js",
   "repository": {
