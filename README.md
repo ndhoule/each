@@ -4,16 +4,9 @@ Iterate over a collection, invoking a function for each element in the collectio
 
 ## Installation
 
-Browser:
-
-```
-component install ndhoule/each
-```
-
-Node:
-
 ```sh
-$ npm install each
+$ component install ndhoule/each
+$ npm install @ndhoule/each
 ```
 
 ## API
