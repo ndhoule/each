@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var keys = require('keys');
+var keys = require('@ndhoule/keys');
 
 /**
  * Object.prototype.toString reference.
