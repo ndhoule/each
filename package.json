@@ -1,5 +1,5 @@
 {
-  "name": "each",
+  "name": "@ndhoule/each",
   "version": "1.0.2",
   "description": "Iterate over a collection, invoking a function for each element.",
   "main": "index.js",
