@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": ["index.js"],
   "dependencies": {
-    "ndhoule/keys": "^1.1.0"
+    "ndhoule/keys": "1.1.0"
   },
   "development": {
     "mochajs/mocha": "^2.1.0"
