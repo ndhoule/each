@@ -1,3 +1,7 @@
+## 1.0.3
+
+- Fix Duo compatibility
+
 ## 1.0.2
 
 - Change git dependencies to npm packages
