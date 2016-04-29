@@ -1,15 +1,10 @@
 'use strict';
 
-/**
+/*
  * Module dependencies.
  */
 
-// XXX: Hacky fix for Duo not supporting scoped modules
-var keys; try { keys = require('@ndhoule/keys'); } catch(e) { keys = require('keys'); }
-
-/**
- * Object.prototype.toString reference.
- */
+var keys = require('@ndhoule/keys');
 
 var objToString = Object.prototype.toString;
 
@@ -21,7 +16,6 @@ var objToString = Object.prototype.toString;
  * @param {*} val The value to test.
  * @return {boolean} Returns `true` if `val` is a number, otherwise `false`.
  */
-
 // TODO: Move to library
 var isNumber = function isNumber(val) {
   var type = typeof val;
@@ -36,7 +30,6 @@ var isNumber = function isNumber(val) {
  * @param {*} val The value to test.
  * @return {boolean} Returns `true` if the value is an array, otherwise `false`.
  */
-
 // TODO: Move to library
 var isArray = typeof Array.isArray === 'function' ? Array.isArray : function isArray(val) {
   return objToString.call(val) === '[object Array]';
@@ -51,7 +44,6 @@ var isArray = typeof Array.isArray === 'function' ? Array.isArray : function isA
  * @param {*} val
  * @return {boolean}
  */
-
 // TODO: Move to library
 var isArrayLike = function isArrayLike(val) {
   return val != null && (isArray(val) || (val !== 'function' && isNumber(val.length)));
@@ -66,7 +58,6 @@ var isArrayLike = function isArrayLike(val) {
  * @param {Array} array The array(-like) structure to iterate over.
  * @return {undefined}
  */
-
 var arrayEach = function arrayEach(iterator, array) {
   for (var i = 0; i < array.length; i += 1) {
     // Break iteration early if `iterator` returns `false`
@@ -85,7 +76,6 @@ var arrayEach = function arrayEach(iterator, array) {
  * @param {Object} object The object to iterate over.
  * @return {undefined}
  */
-
 var baseEach = function baseEach(iterator, object) {
   var ks = keys(object);
 
@@ -128,12 +118,11 @@ var baseEach = function baseEach(iterator, object) {
  * //-> 'enchanter', 'occupation', { name: 'tim', occupation: 'enchanter' }
  * //=> undefined
  */
-
 var each = function each(iterator, collection) {
   return (isArrayLike(collection) ? arrayEach : baseEach).call(this, iterator, collection);
 };
 
-/**
+/*
  * Exports.
  */
 
