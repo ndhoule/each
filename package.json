@@ -17,8 +17,7 @@
   },
   "homepage": "https://github.com/ndhoule/each",
   "dependencies": {
-    "@ndhoule/keys": "^2.0.0",
-    "sinon": "^1.12.2"
+    "@ndhoule/keys": "^2.0.0"
   },
   "devDependencies": {
     "esformatter-braces": "^0.1.7",
@@ -27,6 +26,7 @@
     "eslint": "^0.15.1",
     "jsfmt": "^0.4.0",
     "mocha": "^2.1.0",
+    "sinon": "^1.12.2",
     "zuul": "^2.0.0"
   }
 }
